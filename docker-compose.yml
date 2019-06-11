@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  base:
+    image: leeyanzhe/arm-cross:base
+    network_mode: 'host'
+    environment:
+      SSHD_OPTS: "-p 23"
+    restart: always
+  opencv:
+    image: leeyanzhe/arm-cross:opencv
+    network_mode: 'host'
+    environment:
+      SSHD_OPTS: "-p 23"
+    restart: always
+  devhost:
+    build:
+      context: ./devhost
+      dockerfile: Dockerfile
+      args:
+        IMG_TAG: opencv
+    network_mode: 'host'
+    environment:
+      SSHD_OPTS: "-p 23"
+    restart: always
+    volumes:
+      - ./:/root
+
