@@ -16,8 +16,6 @@ services:
     build:
       context: ./devhost
       dockerfile: Dockerfile
-      args:
-        IMG_TAG: opencv
     network_mode: 'host'
     environment:
       SSHD_OPTS: "-p 23"
