@@ -1,4 +1,4 @@
-FROM leeyanzhe/arm-cross:base
+FROM leeyanzhe/arm-cross:base AS builder
 
 ENV OPENCV_VERSION 4.1.0
 
@@ -43,5 +43,9 @@ RUN cmake -DCMAKE_INSTALL_PREFIX=/opt/opencv \
 RUN make -j$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l) \
     && make install \
     && rm -rf *
+
+FROM leeyanzhe/arm-cross:base
+
+COPY --from=builder /opt/opencv /opt/
 
 WORKDIR /root
