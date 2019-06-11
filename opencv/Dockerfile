@@ -46,6 +46,6 @@ RUN make -j$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l) \
 
 FROM leeyanzhe/arm-cross:base
 
-COPY --from=builder /opt/opencv /opt/
+COPY --from=builder /opt/opencv /opt/opencv
 
 WORKDIR /root
