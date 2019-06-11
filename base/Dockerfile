@@ -17,11 +17,11 @@ RUN apt -y update \
 
 WORKDIR /usr/src
 
-RUN git clone https://github.com/GregorR/musl-cross.git
+COPY musl-config.sh ./musl-config.sh
 
-COPY musl-config.sh ./musl-cross/config.sh
-
-RUN cd musl-cross \
+RUN git clone https://github.com/GregorR/musl-cross.git \
+    && cd musl-cross \
+    && mv ../musl-config.sh ./config.sh \
     && ./build.sh \
     && cd .. \
     && rm -rf /usr/src/* \
