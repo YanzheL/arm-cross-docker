@@ -41,6 +41,7 @@ RUN cmake -DCMAKE_INSTALL_PREFIX=/opt/opencv \
       ..
 
 RUN make -j$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l) \
-    && make install
+    && make install \
+    && rm -rf *
 
 WORKDIR /root
