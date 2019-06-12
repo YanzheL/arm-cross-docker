@@ -39,7 +39,7 @@ GCC_VER = 8.3.0
 # MPC_VER =
 # MPFR_VER =
 # ISL_VER =
-LINUX_VER = 2.6.35.7
+# LINUX_VER =
 
 # By default source archives are downloaded with wget. curl is also an option.
 
