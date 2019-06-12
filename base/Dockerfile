@@ -12,6 +12,7 @@ RUN apt -y update \
                       python3 \
                       wget \
                       curl \
+                      pkg-config \
     && apt -y clean \
     && mkdir -m 700 /run/sshd
 
