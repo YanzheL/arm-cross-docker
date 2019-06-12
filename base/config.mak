@@ -43,7 +43,7 @@ GCC_VER = 8.3.0
 
 # By default source archives are downloaded with wget. curl is also an option.
 
-# DL_CMD = wget -c -O
+DL_CMD = wget -q -c -O
 # DL_CMD = curl -C - -L -o
 
 # Something like the following can be used to produce a static-linked
