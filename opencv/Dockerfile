@@ -4,7 +4,7 @@ ENV FFMPEG_VERSION 4.1.3
 
 WORKDIR /usr/src
 
-RUN wget https://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.xz \
+RUN wget -q https://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.xz \
     && tar -Jxf ffmpeg-$FFMPEG_VERSION.tar.xz
 
 WORKDIR /usr/src/ffmpeg-$FFMPEG_VERSION
