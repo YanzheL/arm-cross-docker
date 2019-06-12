@@ -41,8 +41,6 @@ WORKDIR /usr/src/opencv-$OPENCV_VERSION/build
 
 COPY --from=ffmpeg-builder /opt/cross-host-root /opt/cross-host-root
 
-ENV PKG_CONFIG_PATH /opt/cross-host-root/lib/pkgconfig
-
 RUN cmake -DCMAKE_INSTALL_PREFIX=/opt/cross-host-root \
       -DCMAKE_SYSTEM_NAME=Linux \
       -DCMAKE_SYSTEM_PROCESSOR=arm \

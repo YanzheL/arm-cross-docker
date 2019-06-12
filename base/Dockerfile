@@ -30,4 +30,6 @@ RUN git clone https://github.com/GregorR/musl-cross.git \
 
 WORKDIR /root
 
+ENV PKG_CONFIG_PATH /opt/cross-host-root/lib/pkgconfig
+
 CMD /usr/sbin/sshd -D $SSHD_OPTS
