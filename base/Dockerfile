@@ -18,15 +18,17 @@ RUN apt -y update \
 
 WORKDIR /usr/src
 
-COPY musl-config.sh ./musl-config.sh
+COPY config.mak ./config.mak
 
-RUN git clone https://github.com/GregorR/musl-cross.git \
-    && cd musl-cross \
-    && mv ../musl-config.sh ./config.sh \
-    && ./build.sh \
+RUN git clone https://github.com/richfelker/musl-cross-make.git \
+    && cd musl-cross-make \
+    && mv ../config.mak ./config.mak \
+    && make -j$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l) \
+    && make all \
+    && make install \
     && cd .. \
     && rm -rf /usr/src/* \
-    && ln -s /opt/cross/arm-linux-musleabihf/bin/* /usr/bin/
+    && ln -s /opt/cross/bin/* /usr/bin/
 
 WORKDIR /root
 
