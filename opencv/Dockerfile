@@ -12,7 +12,7 @@ RUN wget -q https://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.xz \
 WORKDIR /usr/src/x264
 
 RUN ./configure \
-      --cross-prefix=arm-linux-musleabihf- \
+      --cross-prefix=aarch64-linux-musl- \
       --prefix=/opt/cross-host-root \
       --extra-ldflags="-static" \
       --host=arm-linux \
@@ -27,12 +27,12 @@ WORKDIR /usr/src/ffmpeg-$FFMPEG_VERSION
 
 RUN ./configure \
       --enable-cross-compile \
-      --cross-prefix=arm-linux-musleabihf- \
+      --cross-prefix=aarch64-linux-musl- \
       --target-os=linux \
       --arch=arm \
       --enable-nonfree \
       --prefix=/opt/cross-host-root \
-      --ar=arm-linux-musleabihf-ar \
+      --ar=aarch64-linux-musl-ar \
       --disable-librtmp \
       --disable-stripping \
       --extra-cflags="-I/opt/cross-host-root/include" \
@@ -53,8 +53,8 @@ RUN git clone https://github.com/xianyi/OpenBLAS.git
 
 WORKDIR /usr/src/OpenBLAS
 
-RUN make CC=arm-linux-musleabihf-gcc \
-         FC=arm-linux-musleabihf-gfortran \
+RUN make CC=aarch64-linux-musl-gcc \
+         FC=aarch64-linux-musl-gfortran \
          HOSTCC=gcc \
          TARGET=CORTEXA53 \
          BINARY=64 \
@@ -85,10 +85,10 @@ RUN cmake -DCMAKE_INSTALL_PREFIX=/opt/cross-host-root \
       -DCMAKE_SYSTEM_PROCESSOR=arm \
       -DARM_LINUX_SYSROOT=/opt/cross-host-root \
       -DCMAKE_FIND_ROOT_PATH=/opt/cross-host-root \
-      -DCMAKE_C_COMPILER=arm-linux-musleabihf-gcc \
-      -DCMAKE_CXX_COMPILER=arm-linux-musleabihf-g++ \
-      -DCMAKE_LINKER=/usr/bin/arm-musl-linuxeabihf-ld \
-      -DCMAKE_AR=/usr/bin/arm-linux-musleabihf-ar \
+      -DCMAKE_C_COMPILER=aarch64-linux-musl-gcc \
+      -DCMAKE_CXX_COMPILER=aarch64-linux-musl-g++ \
+      -DCMAKE_LINKER=/usr/bin/aarch64-linux-musl-ld \
+      -DCMAKE_AR=/usr/bin/aarch64-linux-musl-ar \
       -DCMAKE_EXE_LINKER_FLAGS="-static" \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_TOOLCHAIN_FILE=../platforms/linux/arm.toolchain.cmake \

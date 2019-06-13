@@ -10,7 +10,7 @@
 # TARGET = i486-linux-musl
 # TARGET = x86_64-linux-musl
 # TARGET = arm-linux-musleabi
-TARGET = arm-linux-musleabihf
+TARGET = aarch64-linux-musl
 # TARGET = sh2eb-linux-muslfdpic
 # ...
 
@@ -61,7 +61,7 @@ DL_CMD = wget -q -c -O
 # Recommended options for faster/simpler build:
 
 # COMMON_CONFIG += --disable-nls
-GCC_CONFIG += --enable-languages=c,c++,fortran --with-arch=armv8-a --with-float=hard --with-fpu=neon-fp-armv8 --with-cpu=cortex-a53
+GCC_CONFIG += --enable-languages=c,c++,fortran --with-float=hard --with-fpu=neon-fp-armv8 --with-cpu=cortex-a53
 # GCC_CONFIG += --disable-libquadmath --disable-decimal-float
 # GCC_CONFIG += --disable-multilib
 
