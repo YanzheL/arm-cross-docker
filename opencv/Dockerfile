@@ -25,6 +25,23 @@ RUN ./configure \
 RUN make -j$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l) \
     && make install
 
+FROM leeyanzhe/arm-cross:base AS openblas-builder
+
+WORKDIR /usr/src
+
+RUN git clone https://github.com/xianyi/OpenBLAS.git
+
+WORKDIR /usr/src/OpenBLAS
+
+RUN make CC=arm-linux-musleabihf-gcc \
+         FC=arm-linux-musleabihf-gfortran \
+         HOSTCC=gcc \
+         TARGET=ARMV7 \
+         BINARY=32 \
+         -j$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l)
+
+RUN make PREFIX=/opt/cross-host-root install
+
 FROM leeyanzhe/arm-cross:base AS opencv-builder
 
 ENV OPENCV_VERSION 4.1.0
@@ -40,6 +57,8 @@ RUN wget -qO opencv-$OPENCV_VERSION.tar.gz https://github.com/opencv/opencv/arch
 WORKDIR /usr/src/opencv-$OPENCV_VERSION/build
 
 COPY --from=ffmpeg-builder /opt/cross-host-root /opt/cross-host-root
+
+COPY --from=openblas-builder /opt/cross-host-root /opt/cross-host-root
 
 RUN cmake -DCMAKE_INSTALL_PREFIX=/opt/cross-host-root \
       -DCMAKE_SYSTEM_NAME=Linux \
