@@ -14,6 +14,10 @@ RUN apt -y update \
                       curl \
                       pkg-config \
                       libncursesw5-dev \
+                      bison \
+                      flex \
+                      bc \
+                      libssl-dev \
     && apt -y clean \
     && mkdir -m 700 /run/sshd
 
