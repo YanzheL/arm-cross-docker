@@ -29,12 +29,11 @@ RUN ./configure \
       --enable-cross-compile \
       --cross-prefix=aarch64-linux-musl- \
       --target-os=linux \
-      --arch=arm \
+      --arch=aarch64 \
       --enable-nonfree \
       --prefix=/opt/cross-host-root \
       --ar=aarch64-linux-musl-ar \
       --disable-librtmp \
-      --disable-stripping \
       --extra-cflags="-I/opt/cross-host-root/include" \
       --extra-ldflags="-L/opt/cross-host-root/lib -static" \
       --enable-pic \
@@ -91,7 +90,7 @@ RUN cmake -DCMAKE_INSTALL_PREFIX=/opt/cross-host-root \
       -DCMAKE_AR=/usr/bin/aarch64-linux-musl-ar \
       -DCMAKE_EXE_LINKER_FLAGS="-static" \
       -DCMAKE_BUILD_TYPE=Release \
-      -DCMAKE_TOOLCHAIN_FILE=../platforms/linux/arm.toolchain.cmake \
+      -DCMAKE_TOOLCHAIN_FILE=../platforms/linux/aarch64-gnu.toolchain.cmake \
       -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-$OPENCV_VERSION/modules \
       -DWITH_OPENCL=OFF \
       -DBUILD_TIFF=ON \
@@ -105,8 +104,6 @@ RUN cmake -DCMAKE_INSTALL_PREFIX=/opt/cross-host-root \
       -DWITH_FFMPEG=ON \
       -DWITH_D1394=OFF \
       -DOPENCV_ENABLE_NONFREE=ON \
-      -DENABLE_VFPV3=ON \
-      -DENABLE_NEON=ON \
       -L \
       ..
 
