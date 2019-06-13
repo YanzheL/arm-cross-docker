@@ -4,8 +4,24 @@ ENV FFMPEG_VERSION 4.1.3
 
 WORKDIR /usr/src
 
+RUN git clone https://code.videolan.org/videolan/x264.git
+
 RUN wget -q https://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.xz \
     && tar -Jxf ffmpeg-$FFMPEG_VERSION.tar.xz
+
+WORKDIR /usr/src/x264
+
+RUN ./configure \
+      --cross-prefix=arm-linux-musleabihf- \
+      --prefix=/opt/cross-host-root \
+      --extra-ldflags="-static" \
+      --host=arm-linux \
+      --enable-static \
+      --disable-asm \
+      --enable-pic
+
+RUN make -j$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l) \
+    && make install
 
 WORKDIR /usr/src/ffmpeg-$FFMPEG_VERSION
 
@@ -20,7 +36,12 @@ RUN ./configure \
       --ar=arm-linux-musleabihf-ar \
       --disable-librtmp \
       --disable-stripping \
-      --extra-ldflags="-static"
+      --extra-cflags="-I/opt/cross-host-root/include" \
+      --extra-ldflags="-L/opt/cross-host-root/lib -static" \
+      --enable-pic \
+      --enable-libx264 \
+      --enable-gpl \
+      --sysroot=/opt/cross-host-root
 
 RUN make -j$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l) \
     && make install
