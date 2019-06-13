@@ -61,7 +61,7 @@ DL_CMD = wget -q -c -O
 # Recommended options for faster/simpler build:
 
 # COMMON_CONFIG += --disable-nls
-GCC_CONFIG += --enable-languages=c,c++,fortran --with-float=hard --with-fpu=neon-fp-armv8 --with-cpu=cortex-a53
+GCC_CONFIG += --enable-languages=c,c++,fortran --with-cpu=cortex-a53
 # GCC_CONFIG += --disable-libquadmath --disable-decimal-float
 # GCC_CONFIG += --disable-multilib
 
