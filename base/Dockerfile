@@ -13,6 +13,7 @@ RUN apt -y update \
                       wget \
                       curl \
                       pkg-config \
+                      libncursesw5-dev \
     && apt -y clean \
     && mkdir -m 700 /run/sshd
 

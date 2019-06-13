@@ -31,7 +31,6 @@ RUN ./configure \
       --target-os=linux \
       --arch=arm \
       --enable-nonfree \
-      --cpu=cortex-a8 \
       --prefix=/opt/cross-host-root \
       --ar=arm-linux-musleabihf-ar \
       --disable-librtmp \
@@ -57,8 +56,8 @@ WORKDIR /usr/src/OpenBLAS
 RUN make CC=arm-linux-musleabihf-gcc \
          FC=arm-linux-musleabihf-gfortran \
          HOSTCC=gcc \
-         TARGET=ARMV7 \
-         BINARY=32 \
+         TARGET=CORTEXA53 \
+         BINARY=64 \
          -j$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l)
 
 RUN make PREFIX=/opt/cross-host-root install
